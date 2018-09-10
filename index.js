@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-rdfa-editor-document-title-plugin'
+  name: '@lblod/ember-rdfa-editor-document-title-plugin'
 };

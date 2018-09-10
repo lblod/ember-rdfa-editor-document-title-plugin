@@ -1,5 +1,5 @@
 {
-  "name": "ember-rdfa-editor-document-title-plugin",
+  "name": "@lblod/ember-rdfa-editor-document-title-plugin",
   "version": "0.0.0",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
