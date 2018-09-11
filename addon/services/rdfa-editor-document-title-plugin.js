@@ -13,6 +13,8 @@ import { task } from 'ember-concurrency';
  */
 const RdfaEditorDocumentTitlePlugin = Service.extend({
 
+  title: '',
+
   init(){
     this._super(...arguments);
     const config = getOwner(this).resolveRegistration('config:environment');
@@ -32,19 +34,11 @@ const RdfaEditorDocumentTitlePlugin = Service.extend({
    */
   execute: task(function * (hrId, contexts, hintsRegistry, editor) {
     if (contexts.length === 0) return [];
-
-    const hints = [];
     contexts.forEach((context) => {
-      let relevantContext = this.detectRelevantContext(context)
-      if (relevantContext) {
-        hintsRegistry.removeHintsInRegion(context.region, hrId, this.get('who'));
-        hints.pushObjects(this.generateHintsForContext(context));
-      }
+      let relevantContext = this.detectRelevantContext(context);
+      if (relevantContext)
+        this.set('title', this.generateTitle(relevantContext));
     });
-    const cards = hints.map( (hint) => this.generateCard(hrId, hintsRegistry, editor, hint));
-    if(cards.length > 0){
-      hintsRegistry.addHints(hrId, this.get('who'), cards);
-    }
   }).restartable(),
 
   /**
@@ -54,79 +48,41 @@ const RdfaEditorDocumentTitlePlugin = Service.extend({
    *
    * @param {Object} context Text snippet at a specific location with an RDFa context
    *
-   * @return {String} URI of context if found, else empty string.
+   * @return {Object} context if found, else undefined
    *
    * @private
    */
-  detectRelevantContext(context){
-    return context.text.toLowerCase().indexOf('hello') >= 0;
+  detectRelevantContext(contexts){
+    //we want a title of a zitting
+    if(!contexts.context.some(this.isAZitting))
+      return;
+
+    let zittingUri = contexts.context.find(this.isAZitting).subject;
+
+    if(contexts.context.some(triple => this.subjectHasDcTermsTitlePredicate(zittingUri, triple)))
+      return contexts;
+
   },
 
-
-
-  /**
-   * Maps location of substring back within reference location
-   *
-   * @method normalizeLocation
-   *
-   * @param {[int,int]} [start, end] Location withing string
-   * @param {[int,int]} [start, end] reference location
-   *
-   * @return {[int,int]} [start, end] absolute location
-   *
-   * @private
-   */
-  normalizeLocation(location, reference){
-    return [location[0] + reference[0], location[1] + reference[0]];
+  subjectHasDcTermsTitlePredicate(subjectUri, triple){
+    return triple.predicate === 'http://purl.org/dc/terms/title' && triple.subject === subjectUri;
   },
 
-  /**
-   * Generates a card given a hint
-   *
-   * @method generateCard
-   *
-   * @param {string} hrId Unique identifier of the event in the hintsRegistry
-   * @param {Object} hintsRegistry Registry of hints in the editor
-   * @param {Object} editor The RDFa editor instance
-   * @param {Object} hint containing the hinted string and the location of this string
-   *
-   * @return {Object} The card to hint for a given template
-   *
-   * @private
-   */
-  generateCard(hrId, hintsRegistry, editor, hint){
-    return EmberObject.create({
-      info: {
-        label: this.get('who'),
-        plainValue: hint.text,
-        htmlString: '<b>hello world</b>',
-        location: hint.location,
-        hrId, hintsRegistry, editor
-      },
-      location: hint.location,
-      card: this.get('who')
-    });
+  isAZitting(triple){
+    return triple.object === 'http://data.vlaanderen.be/ns/besluit#Zitting';
   },
 
-  /**
-   * Generates a hint, given a context
-   *
-   * @method generateHintsForContext
-   *
-   * @param {Object} context Text snippet at a specific location with an RDFa context
-   *
-   * @return {Object} [{dateString, location}]
-   *
-   * @private
-   */
-  generateHintsForContext(context){
-    const hints = [];
-    const index = context.text.toLowerCase().indexOf('hello');
-    const text = context.text.slice(index, index+5);
-    const location = this.normalizeLocation([index, index + 5], context.region);
-    hints.push({text, location});
-    return hints;
+  subjectHasGeplandeStart(subjectUri, triple){
+    return triple.predicate === 'http://data.vlaanderen.be/ns/besluit#geplandeStart' && triple.subject === subjectUri;
+  },
+
+  generateTitle(contexts){
+    let title = contexts.context.find(t => t.predicate === 'http://purl.org/dc/terms/title').object;
+    title = title.replace(/\s\s+/g, ' ');
+    title = title.replace( /\u200B/, '');
+    return title;
   }
+
 });
 
 RdfaEditorDocumentTitlePlugin.reopen({
