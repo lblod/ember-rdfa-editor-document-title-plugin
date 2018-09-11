@@ -1,6 +1,4 @@
-import { getOwner } from '@ember/application';
 import Service from '@ember/service';
-import EmberObject, { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 
 /**
@@ -17,7 +15,6 @@ const RdfaEditorDocumentTitlePlugin = Service.extend({
 
   init(){
     this._super(...arguments);
-    const config = getOwner(this).resolveRegistration('config:environment');
   },
 
   /**
@@ -32,7 +29,7 @@ const RdfaEditorDocumentTitlePlugin = Service.extend({
    *
    * @public
    */
-  execute: task(function * (hrId, contexts, hintsRegistry, editor) {
+  execute: task(function * (hrId, contexts) {
     if (contexts.length === 0) return [];
     contexts.forEach((context) => {
       let relevantContext = this.detectRelevantContext(context);
