@@ -1,20 +1,22 @@
 ember-rdfa-editor-document-title-plugin
 ==============================================================================
 
-[Short description of the addon.]
+A plugin to extract title from rdfa-editor-document
 
 Installation
 ------------------------------------------------------------------------------
 
 ```
-ember install ember-rdfa-editor-document-title-plugin
+ember install @lblod/ember-rdfa-editor-document-title-plugin
 ```
 
 
 Usage
 ------------------------------------------------------------------------------
 
-[Longer description of how to use the addon in apps.]
+Current implementation just checks for a Zitting with dct:Title.
+Then sets property 'title' in the service rdfa-editor-document-title-plugin.
+Use an observer on this property to track changes.
 
 
 Contributing
@@ -22,7 +24,7 @@ Contributing
 
 ### Installation
 
-* `git clone <repository-url>`
+* `git clone https://github.com/lblod/ember-rdfa-editor-document-title-plugin.git`
 * `cd ember-rdfa-editor-document-title-plugin`
 * `npm install`
 
@@ -30,17 +32,6 @@ Contributing
 
 * `npm run lint:js`
 * `npm run lint:js -- --fix`
-
-### Running tests
-
-* `ember test` – Runs the test suite on the current Ember version
-* `ember test --server` – Runs the test suite in "watch mode"
-* `ember try:each` – Runs the test suite against multiple Ember versions
-
-### Running the dummy application
-
-* `ember serve`
-* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
 
 For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
 
