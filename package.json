@@ -1,13 +1,16 @@
 {
   "name": "@lblod/ember-rdfa-editor-document-title-plugin",
   "version": "0.1.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "A plugin to extract title from an rdfa-editor-document.",
   "keywords": [
     "ember-addon"
   ],
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lblod/ember-rdfa-editor-document-title-plugin.git"
+  },
   "license": "MIT",
-  "author": "",
+  "author": "redpencil.io",
   "directories": {
     "doc": "doc",
     "test": "tests"
