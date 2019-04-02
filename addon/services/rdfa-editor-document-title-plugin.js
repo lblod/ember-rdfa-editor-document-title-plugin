@@ -2,8 +2,24 @@ import Service from '@ember/service';
 import { task } from 'ember-concurrency';
 
 /**
- * Service responsible for correct annotation of dates
+ * Service responsible for extracting a title from notulen.
+ * ---------------------------------------------------
+ * CODE REVIEW NOTES
+ * ---------------------------------------------------
  *
+ *  INTERACTION PATTERNS
+ *  --------------------
+ *  For all incoming contexts, looks for a couple of properties in the document, which can be ok to create a title from.
+ *  See implementation for the exact properties, but these are really tighlty coupled with how document in gelinkt-notuleren editor.
+ *  If encountered, the title is built, a title property is set in the service which is exposed to potential consumers.
+ *
+ *  POTENTIAL ISSUES/TODO
+ *  ---------------------
+ *   - Heavely dependepent on the structure of a template in gelinkt-notuleren. Not entirely sure how big of a problem this is.
+ *
+ * ---------------------------------------------------
+ * END CODE REVIEW NOTES
+ * ---------------------------------------------------
  * @module editor-document-title-plugin
  * @class RdfaEditorDocumentTitlePlugin
  * @constructor
