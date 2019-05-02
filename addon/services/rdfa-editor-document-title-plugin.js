@@ -52,7 +52,7 @@ const RdfaEditorDocumentTitlePlugin = Service.extend({
       if (relevantContext)
         this.set('title', this.generateTitle(relevantContext));
     });
-  }).restartable(),
+  }),
 
   /**
    * Given context object, tries to detect a context the plugin can work on
