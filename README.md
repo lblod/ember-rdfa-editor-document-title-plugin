@@ -3,6 +3,15 @@ ember-rdfa-editor-document-title-plugin
 
 A plugin to extract title from rdfa-editor-document
 
+
+Compatibility
+------------------------------------------------------------------------------
+
+* Ember.js v3.4 or above
+* Ember CLI v2.13 or above
+* Node.js v8 or above
+
+
 Installation
 ------------------------------------------------------------------------------
 
@@ -22,19 +31,8 @@ Use an observer on this property to track changes.
 Contributing
 ------------------------------------------------------------------------------
 
-### Installation
+See the [Contributing](CONTRIBUTING.md) guide for details.
 
-* `git clone https://github.com/lblod/ember-rdfa-editor-document-title-plugin.git`
-* `cd ember-rdfa-editor-document-title-plugin`
-* `npm install`
-
-### Linting
-
-* `npm run lint:hbs`
-* `npm run lint:js`
-* `npm run lint:js -- --fix`
-
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
 
 License
 ------------------------------------------------------------------------------
