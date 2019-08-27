@@ -41,7 +41,7 @@ export default Component.extend({
 
 Caveats
 ------------------------------------------------------------------------------
-Current implementation just checks for a resource with rdfs:type `http://data.vlaanderen.be/ns/besluit#Zitting` with attribute dct:title.
+Current implementation just checks for a resource with `rdfs:type` `http://data.vlaanderen.be/ns/besluit#Zitting` with attribute dct:title.
 
 
 Contributing
